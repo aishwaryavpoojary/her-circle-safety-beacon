@@ -12,6 +12,11 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AlertRouteImport } from './routes/alert'
 import { Route as ContactsRouteImport } from './routes/contacts'
+import { Route as FakeCallRouteImport } from './routes/fake-call'
+import { Route as NearbyRouteImport } from './routes/nearby'
+import { Route as SettingsRouteImport } from './routes/settings'
+import { Route as StealthRouteImport } from './routes/stealth'
+import { Route as TripRouteImport } from './routes/trip'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -28,35 +33,105 @@ const ContactsRoute = ContactsRouteImport.update({
   path: '/contacts',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FakeCallRoute = FakeCallRouteImport.update({
+  id: '/fake-call',
+  path: '/fake-call',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NearbyRoute = NearbyRouteImport.update({
+  id: '/nearby',
+  path: '/nearby',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StealthRoute = StealthRouteImport.update({
+  id: '/stealth',
+  path: '/stealth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TripRoute = TripRouteImport.update({
+  id: '/trip',
+  path: '/trip',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/alert': typeof AlertRoute
   '/contacts': typeof ContactsRoute
+  '/fake-call': typeof FakeCallRoute
+  '/nearby': typeof NearbyRoute
+  '/settings': typeof SettingsRoute
+  '/stealth': typeof StealthRoute
+  '/trip': typeof TripRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/alert': typeof AlertRoute
   '/contacts': typeof ContactsRoute
+  '/fake-call': typeof FakeCallRoute
+  '/nearby': typeof NearbyRoute
+  '/settings': typeof SettingsRoute
+  '/stealth': typeof StealthRoute
+  '/trip': typeof TripRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/alert': typeof AlertRoute
   '/contacts': typeof ContactsRoute
+  '/fake-call': typeof FakeCallRoute
+  '/nearby': typeof NearbyRoute
+  '/settings': typeof SettingsRoute
+  '/stealth': typeof StealthRoute
+  '/trip': typeof TripRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/alert' | '/contacts'
+  fullPaths:
+    | '/'
+    | '/alert'
+    | '/contacts'
+    | '/fake-call'
+    | '/nearby'
+    | '/settings'
+    | '/stealth'
+    | '/trip'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/alert' | '/contacts'
-  id: '__root__' | '/' | '/alert' | '/contacts'
+  to:
+    | '/'
+    | '/alert'
+    | '/contacts'
+    | '/fake-call'
+    | '/nearby'
+    | '/settings'
+    | '/stealth'
+    | '/trip'
+  id:
+    | '__root__'
+    | '/'
+    | '/alert'
+    | '/contacts'
+    | '/fake-call'
+    | '/nearby'
+    | '/settings'
+    | '/stealth'
+    | '/trip'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AlertRoute: typeof AlertRoute
   ContactsRoute: typeof ContactsRoute
+  FakeCallRoute: typeof FakeCallRoute
+  NearbyRoute: typeof NearbyRoute
+  SettingsRoute: typeof SettingsRoute
+  StealthRoute: typeof StealthRoute
+  TripRoute: typeof TripRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -82,6 +157,41 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContactsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/fake-call': {
+      id: '/fake-call'
+      path: '/fake-call'
+      fullPath: '/fake-call'
+      preLoaderRoute: typeof FakeCallRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/nearby': {
+      id: '/nearby'
+      path: '/nearby'
+      fullPath: '/nearby'
+      preLoaderRoute: typeof NearbyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/stealth': {
+      id: '/stealth'
+      path: '/stealth'
+      fullPath: '/stealth'
+      preLoaderRoute: typeof StealthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/trip': {
+      id: '/trip'
+      path: '/trip'
+      fullPath: '/trip'
+      preLoaderRoute: typeof TripRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -89,6 +199,11 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AlertRoute: AlertRoute,
   ContactsRoute: ContactsRoute,
+  FakeCallRoute: FakeCallRoute,
+  NearbyRoute: NearbyRoute,
+  SettingsRoute: SettingsRoute,
+  StealthRoute: StealthRoute,
+  TripRoute: TripRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
