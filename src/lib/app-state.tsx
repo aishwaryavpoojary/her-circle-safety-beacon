@@ -8,7 +8,7 @@ import { DEFAULT_SETTINGS, MAX_CONTACTS, type Contact, type Settings } from "@/l
 import { getPosition, watchAdaptive, type Fix } from "@/services/location";
 import { flushQueue, pushPoint } from "@/services/offlineQueue";
 import { vibrate } from "@/services/ringtone";
-import { sendSosSms } from "@/server/sos.functions";
+import { sendSosSms } from "@/lib/sos.functions";
 import { triggerManager, type TriggerSource } from "@/triggers/TriggerManager";
 import { shakeTrigger } from "@/triggers/shake";
 
