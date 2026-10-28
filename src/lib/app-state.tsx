@@ -294,7 +294,12 @@ export function AppProvider({ children }: { children: ReactNode }) {
   }, [countdown, triggerSos]);
 
   // trigger manager wiring
-  useEffect(() => triggerManager.onTrigger((src) => startCountdown(src)), [startCountdown]);
+  useEffect(() => {
+    const off = triggerManager.onTrigger((src) => startCountdown(src));
+    return () => {
+      off();
+    };
+  }, [startCountdown]);
   useEffect(() => {
     if (settings.shakeEnabled) triggerManager.registerTrigger(shakeTrigger(settings.shakeSensitivity));
     else triggerManager.unregisterTrigger("shake");

@@ -44,11 +44,11 @@ export async function findNearby(
           const address = [t["addr:housenumber"], t["addr:street"], t["addr:suburb"], t["addr:city"]].filter(Boolean).join(", ");
           return {
             id: e.id,
-            name: t.name || t["name:en"] || (kind === "police" ? "Police station" : "Hospital"),
+            name: t["name"] || t["name:en"] || (kind === "police" ? "Police station" : "Hospital"),
             lat,
             lng,
             address,
-            phone: t.phone || t["contact:phone"] || null,
+            phone: t["phone"] || t["contact:phone"] || null,
             distanceKm: haversineKm(origin, { lat, lng }),
           } as Place;
         })

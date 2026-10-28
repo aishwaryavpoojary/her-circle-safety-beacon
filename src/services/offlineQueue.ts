@@ -4,7 +4,7 @@ import { queueAdd, queueAll, queueRemove, type QueuedPoint } from "@/lib/db";
 /** Push a point now; if offline or failing, keep it in IndexedDB for later. */
 export async function pushPoint(p: QueuedPoint) {
   if (!navigator.onLine) return queueAdd(p);
-  const { error } = await supabase.from("alert_locations").insert(p);
+  const { error } = await supabase.from("alert_locations").insert({ alert_id: p.alert_id, lat: p.lat, lng: p.lng, accuracy: p.accuracy, recorded_at: p.recorded_at });
   if (error) await queueAdd(p);
 }
 

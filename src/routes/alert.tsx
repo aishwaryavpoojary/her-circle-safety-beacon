@@ -71,7 +71,7 @@ function AlertPage() {
       )}
       {active.channel === "test" && <p className="rounded-2xl bg-muted p-4 text-sm text-muted-foreground">Message preview: {active.message}</p>}
 
-      <MapView center={lastFix} accuracy={lastFix?.accuracy} className="h-64" />
+      <MapView center={lastFix} accuracy={lastFix?.accuracy ?? null} className="h-64" />
       <p className="text-xs text-muted-foreground">
         {lastFix ? `Last fix ${new Date(lastFix.at).toLocaleTimeString()} · ±${Math.round(lastFix.accuracy ?? 0)} m` : "Waiting for GPS…"}
         {!online && active.alertId ? " · offline: points are saved and will sync" : ""}

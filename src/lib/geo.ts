@@ -15,11 +15,11 @@ export function mapsLink(lat: number, lng: number) {
 }
 
 export function buildEmergencyMessage(opts: {
-  lat?: number;
-  lng?: number;
+  lat?: number | undefined;
+  lng?: number | undefined;
   at: Date;
-  ageMinutes?: number;
-  trackingUrl?: string;
+  ageMinutes?: number | undefined;
+  trackingUrl?: string | undefined;
 }) {
   const time = opts.at.toLocaleString();
   let loc: string;

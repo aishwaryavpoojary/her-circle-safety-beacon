@@ -49,9 +49,9 @@ export const sendSosSms = createServerFn({ method: "POST" })
       return { sent: 0, test: true, recipients: contacts.map((c) => c.name), body };
     }
 
-    const LOVABLE_API_KEY = process.env.LOVABLE_API_KEY;
-    const TWILIO_API_KEY = process.env.TWILIO_API_KEY;
-    const FROM = process.env.TWILIO_FROM_NUMBER;
+    const LOVABLE_API_KEY = process.env["LOVABLE_API_KEY"];
+    const TWILIO_API_KEY = process.env["TWILIO_API_KEY"];
+    const FROM = process.env["TWILIO_FROM_NUMBER"];
     if (!LOVABLE_API_KEY || !TWILIO_API_KEY || !FROM) {
       throw new Error("SMS service is not set up yet");
     }
