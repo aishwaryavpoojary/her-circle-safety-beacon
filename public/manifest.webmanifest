@@ -1,0 +1,19 @@
+{
+  "name": "Safe Her",
+  "short_name": "Safe Her",
+  "description": "One-tap SOS, live location sharing and fake calls.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#1e0d22",
+  "theme_color": "#2a1230",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ],
+  "shortcuts": [
+    { "name": "SOS", "url": "/?action=sos", "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Fake Call", "url": "/fake-call?now=1", "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Quick launch", "url": "/quick" }
+  ]
+}
