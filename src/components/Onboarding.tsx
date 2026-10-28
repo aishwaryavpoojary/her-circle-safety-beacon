@@ -36,7 +36,7 @@ export function Onboarding() {
   const { updateSettings } = useApp();
   const [i, setI] = useState(0);
   const [busy, setBusy] = useState(false);
-  const s = STEPS[i];
+  const s = STEPS[i]!;
   const next = () => (i < STEPS.length - 1 ? setI(i + 1) : updateSettings({ onboarded: true }));
 
   const allow = async () => {
