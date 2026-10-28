@@ -14,9 +14,11 @@ import { Route as AlertRouteImport } from './routes/alert'
 import { Route as ContactsRouteImport } from './routes/contacts'
 import { Route as FakeCallRouteImport } from './routes/fake-call'
 import { Route as NearbyRouteImport } from './routes/nearby'
+import { Route as QuickRouteImport } from './routes/quick'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as StealthRouteImport } from './routes/stealth'
 import { Route as TripRouteImport } from './routes/trip'
+import { Route as TrackTokenRouteImport } from './routes/track.$token'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -43,6 +45,11 @@ const NearbyRoute = NearbyRouteImport.update({
   path: '/nearby',
   getParentRoute: () => rootRouteImport,
 } as any)
+const QuickRoute = QuickRouteImport.update({
+  id: '/quick',
+  path: '/quick',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SettingsRoute = SettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
@@ -58,6 +65,11 @@ const TripRoute = TripRouteImport.update({
   path: '/trip',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TrackTokenRoute = TrackTokenRouteImport.update({
+  id: '/track/$token',
+  path: '/track/$token',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -65,9 +77,11 @@ export interface FileRoutesByFullPath {
   '/contacts': typeof ContactsRoute
   '/fake-call': typeof FakeCallRoute
   '/nearby': typeof NearbyRoute
+  '/quick': typeof QuickRoute
   '/settings': typeof SettingsRoute
   '/stealth': typeof StealthRoute
   '/trip': typeof TripRoute
+  '/track/$token': typeof TrackTokenRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -75,9 +89,11 @@ export interface FileRoutesByTo {
   '/contacts': typeof ContactsRoute
   '/fake-call': typeof FakeCallRoute
   '/nearby': typeof NearbyRoute
+  '/quick': typeof QuickRoute
   '/settings': typeof SettingsRoute
   '/stealth': typeof StealthRoute
   '/trip': typeof TripRoute
+  '/track/$token': typeof TrackTokenRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -86,9 +102,11 @@ export interface FileRoutesById {
   '/contacts': typeof ContactsRoute
   '/fake-call': typeof FakeCallRoute
   '/nearby': typeof NearbyRoute
+  '/quick': typeof QuickRoute
   '/settings': typeof SettingsRoute
   '/stealth': typeof StealthRoute
   '/trip': typeof TripRoute
+  '/track/$token': typeof TrackTokenRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -98,9 +116,11 @@ export interface FileRouteTypes {
     | '/contacts'
     | '/fake-call'
     | '/nearby'
+    | '/quick'
     | '/settings'
     | '/stealth'
     | '/trip'
+    | '/track/$token'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -108,9 +128,11 @@ export interface FileRouteTypes {
     | '/contacts'
     | '/fake-call'
     | '/nearby'
+    | '/quick'
     | '/settings'
     | '/stealth'
     | '/trip'
+    | '/track/$token'
   id:
     | '__root__'
     | '/'
@@ -118,9 +140,11 @@ export interface FileRouteTypes {
     | '/contacts'
     | '/fake-call'
     | '/nearby'
+    | '/quick'
     | '/settings'
     | '/stealth'
     | '/trip'
+    | '/track/$token'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -129,9 +153,11 @@ export interface RootRouteChildren {
   ContactsRoute: typeof ContactsRoute
   FakeCallRoute: typeof FakeCallRoute
   NearbyRoute: typeof NearbyRoute
+  QuickRoute: typeof QuickRoute
   SettingsRoute: typeof SettingsRoute
   StealthRoute: typeof StealthRoute
   TripRoute: typeof TripRoute
+  TrackTokenRoute: typeof TrackTokenRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -171,6 +197,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof NearbyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/quick': {
+      id: '/quick'
+      path: '/quick'
+      fullPath: '/quick'
+      preLoaderRoute: typeof QuickRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/settings': {
       id: '/settings'
       path: '/settings'
@@ -192,6 +225,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TripRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/track/$token': {
+      id: '/track/$token'
+      path: '/track/$token'
+      fullPath: '/track/$token'
+      preLoaderRoute: typeof TrackTokenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -201,9 +241,11 @@ const rootRouteChildren: RootRouteChildren = {
   ContactsRoute: ContactsRoute,
   FakeCallRoute: FakeCallRoute,
   NearbyRoute: NearbyRoute,
+  QuickRoute: QuickRoute,
   SettingsRoute: SettingsRoute,
   StealthRoute: StealthRoute,
   TripRoute: TripRoute,
+  TrackTokenRoute: TrackTokenRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
