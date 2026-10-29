@@ -30,11 +30,11 @@ describe("SOS siren", () => {
     startSiren();
     startSiren();
     expect(oscillators).toHaveLength(2);
-    expect(oscillators[0].type).toBe("sawtooth");
-    expect(oscillators[0].frequency.value).toBe(950);
-    expect(oscillators[1].frequency.value).toBe(1);
-    expect(gains[0].gain.value).toBe(450);
-    expect(gains[1].gain.value).toBe(0.8);
+    expect(oscillators[0]?.type).toBe("sawtooth");
+    expect(oscillators[0]?.frequency.value).toBe(950);
+    expect(oscillators[1]?.frequency.value).toBe(1);
+    expect(gains[0]?.gain.value).toBe(450);
+    expect(gains[1]?.gain.value).toBe(0.8);
     for (const oscillator of oscillators) expect(oscillator.start).toHaveBeenCalledOnce();
     stopSiren();
     stopSiren();
