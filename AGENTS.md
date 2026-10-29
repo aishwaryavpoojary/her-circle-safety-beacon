@@ -8,3 +8,5 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+- Keep SOS siren playback in the app provider and its browser-safe sound service so every SOS trigger shares the same sound lifecycle, independent of the current screen.

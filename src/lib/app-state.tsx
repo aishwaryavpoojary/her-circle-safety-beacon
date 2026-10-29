@@ -8,6 +8,7 @@ import { DEFAULT_SETTINGS, MAX_CONTACTS, type Contact, type Settings } from "@/l
 import { getPosition, watchAdaptive, type Fix } from "@/services/location";
 import { flushQueue, pushPoint } from "@/services/offlineQueue";
 import { vibrate } from "@/services/ringtone";
+import { prepareSiren, startSiren, stopSiren } from "@/services/siren";
 import { sendSosSms } from "@/lib/sos.functions";
 import { triggerManager, type TriggerSource } from "@/triggers/TriggerManager";
 import { shakeTrigger } from "@/triggers/shake";
@@ -77,6 +78,24 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [responders, setResponders] = useState<Responder[]>([]);
   const settingsRef = useRef(settings);
   settingsRef.current = settings;
+
+  // Unlock sound on a user gesture, before the countdown's delayed activation.
+  useEffect(() => {
+    const unlock = () => { prepareSiren(); };
+    window.addEventListener("pointerdown", unlock);
+    window.addEventListener("keydown", unlock);
+    return () => {
+      window.removeEventListener("pointerdown", unlock);
+      window.removeEventListener("keydown", unlock);
+    };
+  }, []);
+
+  const sirenActive = triggering || active?.kind === "sos";
+  useEffect(() => {
+    if (sirenActive) startSiren();
+    else stopSiren();
+    return stopSiren;
+  }, [sirenActive]);
 
   // ---- bootstrap
   useEffect(() => {
@@ -277,6 +296,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
   // countdown
   const startCountdown = useCallback((source: TriggerSource) => {
+    prepareSiren();
     setCountdown((c) => c ?? { source, remaining: 5 });
   }, []);
   const cancelCountdown = () => setCountdown(null);
