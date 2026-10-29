@@ -153,6 +153,53 @@ export type Database = {
         }
         Relationships: []
       }
+      notification_deliveries: {
+        Row: {
+          alert_id: string
+          attempts: number
+          contact_id: string
+          contact_name: string | null
+          created_at: string
+          error: string | null
+          id: string
+          kind: string
+          sent_at: string | null
+          status: string
+        }
+        Insert: {
+          alert_id: string
+          attempts?: number
+          contact_id: string
+          contact_name?: string | null
+          created_at?: string
+          error?: string | null
+          id?: string
+          kind?: string
+          sent_at?: string | null
+          status?: string
+        }
+        Update: {
+          alert_id?: string
+          attempts?: number
+          contact_id?: string
+          contact_name?: string | null
+          created_at?: string
+          error?: string | null
+          id?: string
+          kind?: string
+          sent_at?: string | null
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "notification_deliveries_alert_id_fkey"
+            columns: ["alert_id"]
+            isOneToOne: false
+            referencedRelation: "alerts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           created_at: string
