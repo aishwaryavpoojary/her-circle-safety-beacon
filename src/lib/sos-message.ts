@@ -4,7 +4,7 @@ export function buildSosSms(o: {
   lat?: number | null;
   lng?: number | null;
   trackingUrl?: string | null;
-  nearestPolice?: string | null;
+  nearestPolice?: string | null | undefined;
   at: Date;
   ageMinutes?: number;
 }) {
