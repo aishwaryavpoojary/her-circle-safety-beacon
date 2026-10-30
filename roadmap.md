@@ -1,0 +1,5 @@
+- [ ] Add editable offline emergency numbers to Home, Alert and Settings.
+- [ ] Complete automatic SOS, contact delivery status, retries and offline recovery.
+- [ ] Update Nearby and nearest help on alerts and tracking.
+- [ ] Verify tests and the signed-in SOS test flow.
+- [ ] Connect Twilio and configure its sending number (requires user credentials).
