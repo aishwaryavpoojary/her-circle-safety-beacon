@@ -1,7 +1,17 @@
 export type Sensitivity = "low" | "medium" | "high";
+export type EmergencyNumber = { label: string; number: string };
+export const DEFAULT_EMERGENCY_NUMBERS: EmergencyNumber[] = [
+  { number: "112", label: "National Emergency" },
+  { number: "1091", label: "Women Helpline" },
+  { number: "100", label: "Police" },
+  { number: "108", label: "Ambulance" },
+];
 
 export type Settings = {
   emergencyNumber: string;
+  emergencyRegion: string;
+  emergencyNumbers: EmergencyNumber[];
+  autoSos: boolean;
   pin: string; // empty = no PIN
   shakeEnabled: boolean;
   shakeSensitivity: Sensitivity;
@@ -15,6 +25,9 @@ export type Settings = {
 
 export const DEFAULT_SETTINGS: Settings = {
   emergencyNumber: "112",
+  emergencyRegion: "India",
+  emergencyNumbers: DEFAULT_EMERGENCY_NUMBERS,
+  autoSos: true,
   pin: "",
   shakeEnabled: false,
   shakeSensitivity: "medium",
