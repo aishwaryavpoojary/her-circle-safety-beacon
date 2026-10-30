@@ -3,7 +3,8 @@ import { useEffect, useState } from "react";
 import { History, LogOut, Trash2, Upload, Mic } from "lucide-react";
 import { toast } from "sonner";
 import { useApp } from "@/lib/app-state";
-import { COUNTRY_NUMBERS, type Sensitivity } from "@/lib/settings";
+import { COUNTRY_NUMBERS, DEFAULT_EMERGENCY_NUMBERS, type Sensitivity } from "@/lib/settings";
+import { EmergencyNumbers } from "@/components/EmergencyNumbers";
 import { supabase } from "@/integrations/supabase/client";
 import { clipAdd, clipRemove, clipsAll, wipeLocal, type Clip } from "@/lib/db";
 import { requestMotionPermission } from "@/triggers/shake";
@@ -95,6 +96,16 @@ function SettingsPage() {
       </Section>
 
       <Section title="Emergency">
+        <EmergencyNumbers numbers={settings.emergencyNumbers} />
+        <div className="space-y-2"><Label htmlFor="region">Country / region</Label>
+          <Input id="region" value={settings.emergencyRegion} onChange={e => updateSettings({ emergencyRegion: e.target.value })} />
+        </div>
+        {settings.emergencyNumbers.map((n, i) => <div key={i} className="flex items-center gap-2">
+          <Input aria-label={`Emergency label ${i + 1}`} value={n.label} onChange={e => updateSettings({ emergencyNumbers: settings.emergencyNumbers.map((x, j) => j === i ? { ...x, label: e.target.value } : x) })} />
+          <Input aria-label={`Emergency number ${i + 1}`} className="w-24" inputMode="tel" value={n.number} onChange={e => updateSettings({ emergencyNumbers: settings.emergencyNumbers.map((x, j) => j === i ? { ...x, number: e.target.value.replace(/[^\d+]/g, "") } : x) })} />
+          <Button variant="ghost" size="icon" aria-label={`Remove emergency number ${i + 1}`} onClick={() => updateSettings({ emergencyNumbers: settings.emergencyNumbers.filter((_, j) => j !== i) })}><Trash2 className="h-4 w-4" /></Button>
+        </div>)}
+        <div className="flex gap-2"><Button variant="outline" onClick={() => updateSettings({ emergencyNumbers: [...settings.emergencyNumbers, { label: "", number: "" }] })}>Add number</Button><Button variant="ghost" onClick={() => updateSettings({ emergencyNumbers: DEFAULT_EMERGENCY_NUMBERS, emergencyRegion: "India", emergencyNumber: "112" })}>Reset</Button></div>
         <div className="space-y-2"><Label>Emergency number</Label>
           <Select value={COUNTRY_NUMBERS.some((c) => c.number === settings.emergencyNumber) ? settings.emergencyNumber : "custom"} onValueChange={(v) => v !== "custom" && updateSettings({ emergencyNumber: v })}>
             <SelectTrigger className="h-12"><SelectValue /></SelectTrigger>
@@ -110,7 +121,8 @@ function SettingsPage() {
           </div>
           <p className="text-xs text-muted-foreground">Needed to cancel an alert or mark yourself safe.</p>
         </div>
-        <div className="flex items-center justify-between"><div><p className="font-medium">Test SOS mode</p><p className="text-xs text-muted-foreground">Runs the whole flow without messaging real contacts</p></div><Switch checked={settings.testMode} onCheckedChange={(v) => updateSettings({ testMode: v })} /></div>
+        <div className="flex items-center justify-between gap-3"><Label htmlFor="automatic-sos">Send SOS automatically</Label><Switch id="automatic-sos" checked={settings.autoSos} onCheckedChange={v => updateSettings({ autoSos: v })} /></div>
+        <div className="flex items-center justify-between"><div><Label htmlFor="test-sos">Test SOS mode</Label><p className="text-xs text-muted-foreground">Runs the whole flow without messaging real contacts</p></div><Switch id="test-sos" checked={settings.testMode} onCheckedChange={(v) => updateSettings({ testMode: v })} /></div>
       </Section>
 
       <Section title="Triggers">

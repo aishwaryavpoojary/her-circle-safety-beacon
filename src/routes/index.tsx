@@ -4,6 +4,7 @@ import { Navigation, Users, Wifi, WifiOff, Vibrate, MapPin, EyeOff } from "lucid
 import { useApp } from "@/lib/app-state";
 import { Button } from "@/components/ui/button";
 import { InstallPrompt } from "@/components/InstallPrompt";
+import { EmergencyNumbers } from "@/components/EmergencyNumbers";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -90,6 +91,7 @@ function Home() {
         )}
       </div>
 
+      <EmergencyNumbers numbers={settings.emergencyNumbers} />
       <Button asChild size="lg" variant="secondary" className="h-16 rounded-2xl text-lg" disabled={!!active}>
         <Link to="/trip"><Navigation className="mr-2 h-5 w-5" /> Share my trip</Link>
       </Button>
