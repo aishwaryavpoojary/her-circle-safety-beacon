@@ -273,7 +273,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
       if (alertId && list.length) {
         try {
           const r = await withTimeout(sendSosSms({ data: { alertId, type: "sos", appUrl: window.location.origin } }), 5000);
-          saveActive({ ...base, channel: r.test ? "test" : "server", notified: r.recipients });
+          if (r.setupMissing) throw new Error("Connect Twilio and configure TWILIO_FROM_NUMBER to send automatically");
+          saveActive({ ...base, channel: r.test ? "test" : "server", notified: r.deliveries.filter((d) => d.status === "sent").map((d) => d.name), message: r.body });
           toast.success(r.test ? "Test SOS: no real messages sent" : `SOS sent to ${r.sent} contact(s)`);
           return;
         } catch (e) {
