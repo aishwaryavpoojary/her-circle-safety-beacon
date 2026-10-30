@@ -159,6 +159,7 @@ export type Database = {
           attempts: number
           contact_id: string
           contact_name: string | null
+          contact_phone: string | null
           created_at: string
           error: string | null
           id: string
@@ -171,6 +172,7 @@ export type Database = {
           attempts?: number
           contact_id: string
           contact_name?: string | null
+          contact_phone?: string | null
           created_at?: string
           error?: string | null
           id?: string
@@ -183,6 +185,7 @@ export type Database = {
           attempts?: number
           contact_id?: string
           contact_name?: string | null
+          contact_phone?: string | null
           created_at?: string
           error?: string | null
           id?: string

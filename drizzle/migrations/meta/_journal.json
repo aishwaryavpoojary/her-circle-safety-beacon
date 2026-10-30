@@ -15,6 +15,13 @@
       "when": 1793285753097,
       "tag": "0001_notification_deliveries",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1793357843546,
+      "tag": "0002_delivery_contact_snapshot",
+      "breakpoints": true
     }
   ]
 }
