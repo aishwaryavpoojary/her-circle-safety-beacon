@@ -10,6 +10,7 @@ import { flushQueue, pushPoint } from "@/services/offlineQueue";
 import { vibrate } from "@/services/ringtone";
 import { prepareSiren, startSiren, stopSiren } from "@/services/siren";
 import { sendSosSms } from "@/lib/sos.functions";
+import { getNearbyPlaces } from "@/lib/nearby.functions";
 import { triggerManager, type TriggerSource } from "@/triggers/TriggerManager";
 import { shakeTrigger } from "@/triggers/shake";
 
@@ -227,6 +228,24 @@ export function AppProvider({ children }: { children: ReactNode }) {
       let alertId: string | null = null;
       let token: string | null = null;
 
+      // Best-effort: nearest police station and hospital for the SOS text.
+      let nearestPolice: string | undefined;
+      let nearestHospital: string | undefined;
+      if (fix && navigator.onLine) {
+        try {
+          const r = await withTimeout(
+            getNearbyPlaces({ data: { lat: fix.lat, lng: fix.lng, radiusKm: 10, type: "both" } }),
+            4000,
+          );
+          const p = r.places.find((x) => x.type === "police");
+          const h = r.places.find((x) => x.type === "hospital");
+          if (p) nearestPolice = `${p.name} (${p.distanceKm.toFixed(1)} km)`;
+          if (h) nearestHospital = `${h.name} (${h.distanceKm.toFixed(1)} km)`;
+        } catch {
+          /* nearest help is best-effort; never block the SOS */
+        }
+      }
+
       if (sess && navigator.onLine) {
         token = randomToken();
         const { data, error } = await supabase
@@ -254,6 +273,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
         at: new Date(),
         ageMinutes: ageMin,
         trackingUrl: token ? trackingUrl(token) : undefined,
+        nearestPolice,
+        nearestHospital,
       });
       const link = list.length ? smsUri(list.map((c) => c.phone), message, detectPlatform()) : null;
 
@@ -272,7 +293,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
       if (alertId && list.length) {
         try {
-          const r = await withTimeout(sendSosSms({ data: { alertId, type: "sos", appUrl: window.location.origin } }), 5000);
+          const r = await withTimeout(sendSosSms({ data: { alertId, type: "sos", appUrl: window.location.origin, nearestPolice, nearestHospital } }), 5000);
           if (r.setupMissing) throw new Error("Connect Twilio and configure TWILIO_FROM_NUMBER to send automatically");
           saveActive({ ...base, channel: r.test ? "test" : "server", notified: r.deliveries.filter((d) => d.status === "sent").map((d) => d.name), message: r.body });
           toast.success(r.test ? "Test SOS: no real messages sent" : `SOS sent to ${r.sent} contact(s)`);

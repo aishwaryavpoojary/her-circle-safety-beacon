@@ -20,6 +20,8 @@ export function buildEmergencyMessage(opts: {
   at: Date;
   ageMinutes?: number | undefined;
   trackingUrl?: string | undefined;
+  nearestPolice?: string | undefined;
+  nearestHospital?: string | undefined;
 }) {
   const time = opts.at.toLocaleString();
   let loc: string;
@@ -29,7 +31,9 @@ export function buildEmergencyMessage(opts: {
     if (opts.ageMinutes && opts.ageMinutes >= 1) loc += ` (last known, ${Math.round(opts.ageMinutes)} min old)`;
   }
   const track = opts.trackingUrl ? ` Live: ${opts.trackingUrl}` : "";
-  return `EMERGENCY! I need help. ${loc} (${time}).${track} - Safe Her`;
+  const police = opts.nearestPolice ? ` Nearest police: ${opts.nearestPolice}.` : "";
+  const hospital = opts.nearestHospital ? ` Nearest hospital: ${opts.nearestHospital}.` : "";
+  return `EMERGENCY! I need help. ${loc} (${time}).${track}${police}${hospital} - Safe Her`;
 }
 
 /** Build an sms: URI that opens the composer with all numbers and the body pre-filled. */

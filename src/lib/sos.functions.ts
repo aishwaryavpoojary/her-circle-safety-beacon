@@ -11,6 +11,7 @@ const Input = z.object({
   appUrl: z.string().url().max(300),
   contactIds: z.array(z.string().uuid()).max(5).optional(),
   nearestPolice: z.string().max(160).optional(),
+  nearestHospital: z.string().max(160).optional(),
 });
 
 export type Delivery = { contactId: string; name: string; status: "sending" | "sent" | "failed"; error?: string };
@@ -53,6 +54,7 @@ export const sendSosSms = createServerFn({ method: "POST" })
         lng: alert.start_lng,
         trackingUrl: track,
         nearestPolice: data.nearestPolice,
+        nearestHospital: data.nearestHospital,
         at: new Date(alert.started_at),
       });
     else if (data.type === "trip") body = `${name} is sharing their trip with you via Safe Her. Follow live: ${track}`;
