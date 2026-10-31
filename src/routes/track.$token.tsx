@@ -3,6 +3,7 @@ import { useCallback, useEffect, useState } from "react";
 import { HandHeart, Phone, Shield } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { MapView } from "@/components/MapView";
+import { NearbyHelp } from "@/components/NearbyHelp";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
@@ -85,6 +86,7 @@ function Track() {
           <a href={`https://www.google.com/maps/dir/?api=1&destination=${last.lat},${last.lng}`} target="_blank" rel="noreferrer">Get directions</a>
         </Button>
       )}
+      {sos && <NearbyHelp origin={last ? { lat: last.lat, lng: last.lng } : null} />}
       <Button asChild size="lg" variant="destructive" className="h-14 w-full rounded-2xl"><a href="tel:112"><Phone className="mr-2 h-5 w-5" /> Call emergency services</a></Button>
       {responded ? (
         <p className="rounded-2xl bg-success/15 p-4 text-center font-semibold text-success">They've been told you're responding.</p>

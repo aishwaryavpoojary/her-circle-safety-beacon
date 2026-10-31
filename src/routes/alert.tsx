@@ -6,6 +6,7 @@ import { useApp } from "@/lib/app-state";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { MapView } from "@/components/MapView";
+import { NearbyHelp } from "@/components/NearbyHelp";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 export const Route = createFileRoute("/alert")({
@@ -77,6 +78,8 @@ function AlertPage() {
         {!online && active.alertId ? " · offline: points are saved and will sync" : ""}
         {!active.alertId ? " · live tracking link needs an account and internet" : ""}
       </p>
+
+      {!isTrip && <NearbyHelp origin={lastFix} />}
 
       {link && (
         <Button variant="outline" className="h-12 w-full rounded-2xl" onClick={() => { void navigator.clipboard?.writeText(link); toast.success("Tracking link copied"); }}>
