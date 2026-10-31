@@ -5,6 +5,7 @@ export function buildSosSms(o: {
   lng?: number | null;
   trackingUrl?: string | null;
   nearestPolice?: string | null | undefined;
+  nearestHospital?: string | null | undefined;
   at: Date;
   ageMinutes?: number;
 }) {
@@ -14,5 +15,6 @@ export function buildSosSms(o: {
       : "unavailable";
   const track = o.trackingUrl ? ` Live tracking: ${o.trackingUrl}` : "";
   const police = o.nearestPolice ? ` Nearest police: ${o.nearestPolice}.` : "";
-  return `EMERGENCY from ${o.name}! She needs help. Location: ${loc}${track}${police} Time: ${o.at.toLocaleString()}. - Safe Her`;
+  const hospital = o.nearestHospital ? ` Nearest hospital: ${o.nearestHospital}.` : "";
+  return `EMERGENCY from ${o.name}! She needs help. Location: ${loc}${track}${police}${hospital} Time: ${o.at.toLocaleString()}. - Safe Her`;
 }
